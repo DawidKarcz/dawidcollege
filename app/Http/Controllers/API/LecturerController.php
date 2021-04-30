@@ -93,7 +93,7 @@ class LecturerController extends Controller
             'name' => 'required|string|max:50',
             'address' => 'required|string|max:100',
             'phone' => 'required|string|max:20',
-            'email' => 'required|email|max:50|unique:lecturers,id,' . $id
+            'email' => 'required|email|max:50|unique:lecturers,email,' . $id
         ]);
 
         if ($validator->fails()) {

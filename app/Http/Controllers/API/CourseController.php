@@ -130,27 +130,12 @@ class CourseController extends Controller
     public function destroy(Request $request, $id)
     {
         $course = Course::findOrFail($id);
-
-        if ($course === null) {
-          $statusMsg = 'Course not found!';
-          $statusCode = 404;
-        }
-        elseif ($course->enrolments->count() == 0) {
-          $course->delete();
-          $statusMsg = "Course: {$id} deleted";
-          $statusCode = 200;
+        if ($course->enrolments->count() == 0) {
+            $course->delete();
+            return response()->json(['message' => 'Successfully deleted'], 200);
         }
         else {
-          $statusMsg = "Course: {$id} NOT deleted!";
-          $statusCode = 422;
+            return response()->json(['message' => 'Course not deleted'], 422);
         }
-
-        return response()->json(
-          [
-              'status' => $statusMsg,
-              'data' => null
-          ],
-          $statusCode);
-
     }
 }
